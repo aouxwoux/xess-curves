@@ -20,6 +20,7 @@ import {
   XCircle
 } from "lucide-react";
 import "./styles.css";
+import embeddedPredictionsCsv from "./data/tess_xgboost_predictions.csv?raw";
 
 const DEFAULT_CSV_PATH = `${import.meta.env.BASE_URL}tess_xgboost_predictions.csv`;
 
@@ -252,7 +253,13 @@ function App() {
         setStatus(`Loaded ${parsed.length} rows from bundled predictions CSV.`);
       })
       .catch((error) => {
-        setStatus(`Upload a predictions CSV to begin. ${error.message}`);
+        const parsed = parseCsv(embeddedPredictionsCsv);
+        setRows(parsed);
+        setSelectedIds(new Set(parsed.slice(0, 8).map((row) => row.tic_id)));
+        setActiveRowId(parsed[0]?.tic_id ?? null);
+        setStatus(
+          `Loaded ${parsed.length} rows from embedded demo data. CSV fetch fallback: ${error.message}`
+        );
       });
   }, []);
 
