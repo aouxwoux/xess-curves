@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import "./styles.css";
 
-const DEFAULT_CSV_PATH = "/tess_xgboost_predictions.csv";
+const DEFAULT_CSV_PATH = `${import.meta.env.BASE_URL}tess_xgboost_predictions.csv`;
 
 function parseCsv(text) {
   const rows = [];
